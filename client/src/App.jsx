@@ -9,8 +9,8 @@ const decodeJwt = (token) => {
   try {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     return JSON.parse(jsonPayload);
   } catch (e) {
@@ -362,9 +362,8 @@ const Toast = ({ message, type, onClose }) => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
-      className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-xl border ${
-        type === 'error' ? 'bg-red-500/10 border-red-500/30 text-red-100' : 'bg-primary/10 border-primary/20 text-white'
-      }`}
+      className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-xl border ${type === 'error' ? 'bg-red-500/10 border-red-500/30 text-red-100' : 'bg-primary/10 border-primary/20 text-white'
+        }`}
     >
       <span className={`material-symbols-outlined text-2xl ${type === 'error' ? 'text-red-400' : 'text-primary'}`}>
         {type === 'error' ? 'error' : 'check_circle'}
@@ -455,7 +454,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center gap-2">
         <Link to="/" className="text-xl sm:text-2xl font-space font-bold tracking-tighter text-white hover:opacity-80 transition-opacity cursor-pointer flex items-center gap-2 sm:gap-3 shrink-0">
-          <img src="https://i.ibb.co/jPKyVBvb/logo-gharsa1.png" alt="Gharsa AI Logo" className="h-8 w-auto object-contain" />
+          <img src="https://i.ibb.co/vCVSnc8k/Untitled-design-7-removebg-preview.png" alt="Gharsa AI Logo" className="h-8 w-auto object-contain" />
           <span>Gharsa <span className="text-primary">AI</span></span>
         </Link>
 
@@ -489,7 +488,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
           ) : (
             <>
               {!isRegisterPage && !isLoginPage && (
-                <Link 
+                <Link
                   to="/register"
                   className="text-white border border-white/20 px-4 sm:px-6 py-2 rounded-full font-bold hover:bg-white/10 transition-all text-xs sm:text-sm whitespace-nowrap"
                 >
@@ -497,7 +496,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
                 </Link>
               )}
               {isRegisterPage && (
-                <Link 
+                <Link
                   to="/login"
                   className="text-primary font-bold text-sm hover:underline"
                 >
@@ -505,7 +504,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
                 </Link>
               )}
               {!isRegisterPage && !isLoginPage && (
-                <Link 
+                <Link
                   to="/login"
                   className="text-white/70 hover:text-primary font-medium text-sm transition-colors"
                 >
@@ -516,7 +515,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
           )}
 
           {/* Language Toggle */}
-          <button 
+          <button
             onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
             className="flex items-center gap-1 sm:gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/30 backdrop-blur-md px-3 sm:px-4 h-9 sm:h-10 rounded-full text-[10px] sm:text-xs font-bold text-white transition-all duration-300 group"
             title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
@@ -536,9 +535,9 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
             <span>{t.nav.download}</span>
             <span className="material-symbols-outlined text-sm">download</span>
           </button>
-          
+
           {user && (
-            <button 
+            <button
               onClick={() => setUser(null)}
               className="hidden min-[426px]:flex text-white/40 hover:text-red-400 transition-colors bg-white/5 border border-white/10 w-9 h-9 sm:w-10 sm:h-10 rounded-full items-center justify-center group"
               title={t.nav.logout}
@@ -548,7 +547,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
           )}
 
           {/* Theme Toggle Button */}
-          <button 
+          <button
             onClick={toggleTheme}
             className="text-white/60 hover:text-primary transition-colors bg-white/5 border border-white/10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center group"
             title={theme === 'dark' ? 'الوضع المضيء' : 'الوضع المظلم'}
@@ -560,7 +559,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
 
           {/* Mobile Menu Toggle */}
           {!isSimple && (
-            <button 
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="min-[1167px]:hidden text-white/60 hover:text-primary transition-colors bg-white/5 border border-white/10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center group"
             >
@@ -575,14 +574,14 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
       {/* Mobile/Tablet Menu */}
       <AnimatePresence>
         {!isSimple && isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="absolute top-full left-0 w-full bg-surface border-b border-white/10 shadow-2xl overflow-hidden min-[1167px]:hidden"
           >
             <div className="flex flex-col py-4 px-6 space-y-2 max-w-7xl mx-auto">
-              
+
               {/* User Profile for Mobile (<= 425px) */}
               {user && (
                 <div className="flex min-[426px]:hidden items-center justify-between border-b border-white/10 pb-4 mb-2">
@@ -596,7 +595,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
                     </div>
                     <span className="text-white font-bold text-sm">{user.firstName || user.name || t.auth.default_user}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => {
                       setUser(null);
                       setIsMenuOpen(false);
@@ -843,7 +842,7 @@ const LandingPage = ({ user, setUser }) => {
               className="relative order-1 lg:order-2 flex flex-col sm:flex-row justify-center items-center gap-6 lg:gap-8 min-h-[700px]"
             >
               {/* Mock Community Feed */}
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="relative w-full max-w-[320px] h-[500px] sm:h-[550px] glass-card rounded-[2.5rem] sm:rounded-[3rem] p-4 sm:p-6 border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] overflow-hidden group hover:scale-105 transition-transform duration-500 sm:mt-24 z-20"
@@ -874,7 +873,7 @@ const LandingPage = ({ user, setUser }) => {
               </motion.div>
 
               {/* Full Messages Mock */}
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, 15, 0] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
                 className="flex sm:block hover:scale-105 transition-transform duration-500 sm:mb-24 z-10 scale-[0.85] sm:scale-100"
@@ -1162,125 +1161,128 @@ const CommunityFeature = ({ icon, title, desc }) => (
 const MockPost = ({ name, role, text }) => {
   const { t, lang } = useTranslation();
   return (
-  <div className="bg-surface rounded-2xl p-4 border border-white/5 space-y-3 shadow-xl">
-    {/* Header */}
-    <div className={`flex justify-between items-start ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-      <div className={`flex gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-        <div className="w-10 h-10 rounded-full border border-primary/20 overflow-hidden bg-surface">
-          <img src={`https://i.pravatar.cc/150?u=${name}`} alt={name} className="w-full h-full object-cover" />
-        </div>
-        <div className={lang === 'ar' ? 'text-right' : 'text-left'}>
-          <div className={`flex items-center gap-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-            <span className="font-bold text-white text-sm">{name.toLowerCase()}</span>
-            <span className="material-symbols-outlined text-red-500 text-sm">delete</span>
+    <div className="bg-surface rounded-2xl p-4 border border-white/5 space-y-3 shadow-xl">
+      {/* Header */}
+      <div className={`flex justify-between items-start ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+          <div className="w-10 h-10 rounded-full border border-primary/20 overflow-hidden bg-surface">
+            <img src={`https://i.pravatar.cc/150?u=${name}`} alt={name} className="w-full h-full object-cover" />
           </div>
-          <div className="text-[10px] text-white/40">{role} •</div>
+          <div className={lang === 'ar' ? 'text-right' : 'text-left'}>
+            <div className={`flex items-center gap-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+              <span className="font-bold text-white text-sm">{name.toLowerCase()}</span>
+              <span className="material-symbols-outlined text-red-500 text-sm">delete</span>
+            </div>
+            <div className="text-[10px] text-white/40">{role} •</div>
+          </div>
+        </div>
+        <div className="px-2 py-1 rounded-full bg-white/10 border border-white/5 text-[8px] font-bold text-primary tracking-widest">
+          {t.mockups.general}
         </div>
       </div>
-      <div className="px-2 py-1 rounded-full bg-white/10 border border-white/5 text-[8px] font-bold text-primary tracking-widest">
-        {t.mockups.general}
+
+      {/* Content */}
+      <p className={`text-sm text-white leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>{text}</p>
+
+      {/* Stats */}
+      <div className={`flex justify-between items-center py-1 border-b border-white/5 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex items-center gap-1 text-white/60 text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+          <span className="material-symbols-outlined text-red-500 text-base" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+          <span>0 {t.mockups.farmer_likes}</span>
+        </div>
+        <div className="text-white/60 text-xs">
+          1 {t.mockups.comments}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className={`flex justify-around pt-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+        <button className={`flex items-center gap-1 text-white/60 hover:text-primary transition-colors text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+          <span className="material-symbols-outlined text-base">favorite</span>
+          <span className="font-bold">{t.mockups.like}</span>
+        </button>
+        <button className={`flex items-center gap-1 text-white/60 hover:text-primary transition-colors text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+          <span className="material-symbols-outlined text-base">chat_bubble</span>
+          <span className="font-bold">{t.mockups.comment}</span>
+        </button>
       </div>
     </div>
-
-    {/* Content */}
-    <p className={`text-sm text-white leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>{text}</p>
-
-    {/* Stats */}
-    <div className={`flex justify-between items-center py-1 border-b border-white/5 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-      <div className={`flex items-center gap-1 text-white/60 text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-        <span className="material-symbols-outlined text-red-500 text-base" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
-        <span>0 {t.mockups.farmer_likes}</span>
-      </div>
-      <div className="text-white/60 text-xs">
-        1 {t.mockups.comments}
-      </div>
-    </div>
-
-    {/* Actions */}
-    <div className={`flex justify-around pt-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-      <button className={`flex items-center gap-1 text-white/60 hover:text-primary transition-colors text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-        <span className="material-symbols-outlined text-base">favorite</span>
-        <span className="font-bold">{t.mockups.like}</span>
-      </button>
-      <button className={`flex items-center gap-1 text-white/60 hover:text-primary transition-colors text-xs ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-        <span className="material-symbols-outlined text-base">chat_bubble</span>
-        <span className="font-bold">{t.mockups.comment}</span>
-      </button>
-    </div>
-  </div>
-)};
+  )
+};
 
 const MessagesMock = () => {
   const { t, lang } = useTranslation();
   return (
-  <div className="bg-surface rounded-[2.5rem] w-[280px] p-5 border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] space-y-4 relative overflow-hidden">
-    <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-      <h3 className="text-xl font-bold text-white">{t.mockups.messages}</h3>
-    </div>
-
-    <div className="relative">
-      <span className={`material-symbols-outlined absolute ${lang === 'ar' ? 'right-3' : 'left-3'} top-1/2 -translate-y-1/2 text-white/20 text-lg`}>search</span>
-      <input
-        type="text"
-        placeholder={t.mockups.search}
-        className={`w-full bg-white/5 border border-white/5 rounded-2xl py-2 ${lang === 'ar' ? 'pr-10 pl-3 text-right' : 'pl-10 pr-3 text-left'} text-xs text-white focus:outline-none focus:border-primary/50 transition-colors`}
-        dir={lang === 'ar' ? 'rtl' : 'ltr'}
-      />
-    </div>
-
-    <div className={`flex gap-3 overflow-hidden py-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-      <div className="flex flex-col items-center gap-1 cursor-pointer group">
-        <div className="w-12 h-12 rounded-full border-2 border-primary p-1 group-hover:scale-110 transition-transform">
-          <div className="w-full h-full rounded-full bg-surface-variant overflow-hidden relative">
-            <img src="https://i.pravatar.cc/150?u=khalil" alt="Khalil" className="w-full h-full object-cover" />
-            <div className={`absolute bottom-0 ${lang === 'ar' ? 'left-0' : 'right-0'} w-3 h-3 bg-primary border-2 border-surface rounded-full`} />
-          </div>
-        </div>
-        <span className="text-[9px] text-white/60 font-bold">Khalil</span>
-      </div>
-      <div className="flex flex-col items-center gap-1 cursor-pointer group">
-        <div className="w-12 h-12 rounded-full border-2 border-white/10 p-1 group-hover:scale-110 transition-transform">
-          <div className="w-full h-full rounded-full bg-surface-variant overflow-hidden relative opacity-60">
-            <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah" className="w-full h-full object-cover" />
-          </div>
-        </div>
-        <span className="text-[9px] text-white/40">Sarah</span>
-      </div>
-    </div>
-
-    <div className="space-y-4">
+    <div className="bg-surface rounded-[2.5rem] w-[280px] p-5 border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] space-y-4 relative overflow-hidden">
       <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-        <span className="text-xs font-bold text-white">{t.mockups.messages}</span>
-        <span className="text-[10px] text-primary font-bold px-2 py-1 bg-primary/10 rounded-full">{t.mockups.requests} (2)</span>
+        <h3 className="text-xl font-bold text-white">{t.mockups.messages}</h3>
+      </div>
+
+      <div className="relative">
+        <span className={`material-symbols-outlined absolute ${lang === 'ar' ? 'right-3' : 'left-3'} top-1/2 -translate-y-1/2 text-white/20 text-lg`}>search</span>
+        <input
+          type="text"
+          placeholder={t.mockups.search}
+          className={`w-full bg-white/5 border border-white/5 rounded-2xl py-2 ${lang === 'ar' ? 'pr-10 pl-3 text-right' : 'pl-10 pr-3 text-left'} text-xs text-white focus:outline-none focus:border-primary/50 transition-colors`}
+          dir={lang === 'ar' ? 'rtl' : 'ltr'}
+        />
+      </div>
+
+      <div className={`flex gap-3 overflow-hidden py-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+        <div className="flex flex-col items-center gap-1 cursor-pointer group">
+          <div className="w-12 h-12 rounded-full border-2 border-primary p-1 group-hover:scale-110 transition-transform">
+            <div className="w-full h-full rounded-full bg-surface-variant overflow-hidden relative">
+              <img src="https://i.pravatar.cc/150?u=khalil" alt="Khalil" className="w-full h-full object-cover" />
+              <div className={`absolute bottom-0 ${lang === 'ar' ? 'left-0' : 'right-0'} w-3 h-3 bg-primary border-2 border-surface rounded-full`} />
+            </div>
+          </div>
+          <span className="text-[9px] text-white/60 font-bold">Khalil</span>
+        </div>
+        <div className="flex flex-col items-center gap-1 cursor-pointer group">
+          <div className="w-12 h-12 rounded-full border-2 border-white/10 p-1 group-hover:scale-110 transition-transform">
+            <div className="w-full h-full rounded-full bg-surface-variant overflow-hidden relative opacity-60">
+              <img src="https://i.pravatar.cc/150?u=sarah" alt="Sarah" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <span className="text-[9px] text-white/40">Sarah</span>
+        </div>
       </div>
 
       <div className="space-y-4">
-        <MessageItem name="Maram Khlifi" text="يسعدني الانضمام..." time="1h" active />
-        <MessageItem name="SKANDER" text="هل يمكنني معرفة..." time="2h" />
-        <MessageItem name="Khalil Mejri" text="ممتاز جداً!" time="3 sem." />
+        <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+          <span className="text-xs font-bold text-white">{t.mockups.messages}</span>
+          <span className="text-[10px] text-primary font-bold px-2 py-1 bg-primary/10 rounded-full">{t.mockups.requests} (2)</span>
+        </div>
+
+        <div className="space-y-4">
+          <MessageItem name="Maram Khlifi" text="يسعدني الانضمام..." time="1h" active />
+          <MessageItem name="SKANDER" text="هل يمكنني معرفة..." time="2h" />
+          <MessageItem name="Khalil Mejri" text="ممتاز جداً!" time="3 sem." />
+        </div>
       </div>
     </div>
-  </div>
-)};
+  )
+};
 
 const MessageItem = ({ name, text, time, active }) => {
   const { lang } = useTranslation();
   return (
-  <div className={`flex items-center gap-3 group cursor-pointer ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
-    <div className="relative">
-      <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
-        <img src={`https://i.pravatar.cc/150?u=${name}`} alt={name} className="w-full h-full object-cover" />
+    <div className={`flex items-center gap-3 group cursor-pointer ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+      <div className="relative">
+        <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+          <img src={`https://i.pravatar.cc/150?u=${name}`} alt={name} className="w-full h-full object-cover" />
+        </div>
+        {active && <div className={`absolute bottom-0 ${lang === 'ar' ? 'left-0' : 'right-0'} w-2.5 h-2.5 bg-primary border-2 border-surface rounded-full`} />}
       </div>
-      {active && <div className={`absolute bottom-0 ${lang === 'ar' ? 'left-0' : 'right-0'} w-2.5 h-2.5 bg-primary border-2 border-surface rounded-full`} />}
-    </div>
-    <div className="flex-1 min-w-0">
-      <div className="text-xs font-bold text-white group-hover:text-primary transition-colors">{name}</div>
-      <div className={`text-[9px] text-white/40 truncate ${lang === 'ar' ? 'flex flex-row-reverse gap-1 justify-end' : ''}`}>
-        <span>{text}</span> <span>•</span> <span>{time}</span>
+      <div className="flex-1 min-w-0">
+        <div className="text-xs font-bold text-white group-hover:text-primary transition-colors">{name}</div>
+        <div className={`text-[9px] text-white/40 truncate ${lang === 'ar' ? 'flex flex-row-reverse gap-1 justify-end' : ''}`}>
+          <span>{text}</span> <span>•</span> <span>{time}</span>
+        </div>
       </div>
     </div>
-  </div>
-)};
+  )
+};
 
 const NavItem = ({ icon, label, active }) => (
   <div className={`flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors ${active ? 'text-primary' : 'text-white/20'}`}>
@@ -1294,35 +1296,36 @@ const NavItem = ({ icon, label, active }) => (
 const ScannerMock = () => {
   const { t } = useTranslation();
   return (
-  <div className="bg-surface rounded-[2.5rem] sm:rounded-[3rem] w-full max-w-[350px] p-6 sm:p-8 border border-white/10 shadow-2xl space-y-8 relative overflow-hidden group mx-auto">
-    <div className="relative flex justify-center items-center py-12">
-      {/* Scanning Rings (Circle) */}
-      <div className="w-56 h-56 border-2 border-dashed border-primary/40 rounded-full animate-spin-slow flex items-center justify-center" />
+    <div className="bg-surface rounded-[2.5rem] sm:rounded-[3rem] w-full max-w-[350px] p-6 sm:p-8 border border-white/10 shadow-2xl space-y-8 relative overflow-hidden group mx-auto">
+      <div className="relative flex justify-center items-center py-12">
+        {/* Scanning Rings (Circle) */}
+        <div className="w-56 h-56 border-2 border-dashed border-primary/40 rounded-full animate-spin-slow flex items-center justify-center" />
 
-      {/* Viewfinder (Square) */}
-      <div className="absolute w-32 h-32 border-4 border-primary rounded-[2rem] flex items-center justify-center">
-        <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-xl" />
-        <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-xl" />
-        <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-xl" />
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-xl" />
-        <span className="material-symbols-outlined text-primary text-4xl animate-pulse">center_focus_weak</span>
+        {/* Viewfinder (Square) */}
+        <div className="absolute w-32 h-32 border-4 border-primary rounded-[2rem] flex items-center justify-center">
+          <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-xl" />
+          <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-xl" />
+          <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-xl" />
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-xl" />
+          <span className="material-symbols-outlined text-primary text-4xl animate-pulse">center_focus_weak</span>
+        </div>
       </div>
+
+      <div className="text-center space-y-4">
+        <h3 className="text-2xl font-bold text-white">{t.mockups.ai_diag}</h3>
+        <p className="text-on-surface-variant text-sm leading-relaxed">
+          {t.mockups.ai_diag_desc}
+        </p>
+      </div>
+
+      <button className="w-full bg-primary text-black font-bold py-4 rounded-full flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,230,64,0.3)] hover:scale-105 transition-transform">
+        <span className="material-symbols-outlined">photo_camera</span>
+        {t.mockups.start_scan}
+      </button>
+
     </div>
-
-    <div className="text-center space-y-4">
-      <h3 className="text-2xl font-bold text-white">{t.mockups.ai_diag}</h3>
-      <p className="text-on-surface-variant text-sm leading-relaxed">
-        {t.mockups.ai_diag_desc}
-      </p>
-    </div>
-
-    <button className="w-full bg-primary text-black font-bold py-4 rounded-full flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,230,64,0.3)] hover:scale-105 transition-transform">
-      <span className="material-symbols-outlined">photo_camera</span>
-      {t.mockups.start_scan}
-    </button>
-
-  </div>
-)};
+  )
+};
 
 const ContactInfoCard = ({ icon, title, value, desc }) => (
   <div className="flex gap-6 items-start group">
@@ -1450,10 +1453,10 @@ const SignUpPage = ({ setUser, showToast }) => {
     console.log("Encoded JWT ID token: " + response.credential);
     const decodedToken = decodeJwt(response.credential);
     if (setUser && decodedToken) {
-      setUser({ 
+      setUser({
         firstName: decodedToken.given_name || decodedToken.name || t.auth.default_google_user,
         email: decodedToken.email,
-        profilePicture: decodedToken.picture || '' 
+        profilePicture: decodedToken.picture || ''
       });
     }
     showToast(t.auth.success_log);
@@ -1574,12 +1577,12 @@ const SignUpPage = ({ setUser, showToast }) => {
                       </div>
                     </div>
                     <span className="text-xs text-white/50 mt-2 group-hover:text-white transition-colors">{t.auth.pic}</span>
-                    <input 
-                      type="file" 
-                      name="profilePicture" 
-                      accept="image/*" 
-                      onChange={handleChange} 
-                      className="hidden" 
+                    <input
+                      type="file"
+                      name="profilePicture"
+                      accept="image/*"
+                      onChange={handleChange}
+                      className="hidden"
                     />
                   </label>
                 </div>
@@ -1697,10 +1700,10 @@ const LoginPage = ({ setUser, showToast }) => {
         callback: (res) => {
           const decodedToken = decodeJwt(res.credential);
           if (setUser && decodedToken) {
-            setUser({ 
+            setUser({
               firstName: decodedToken.given_name || decodedToken.name || t.auth.default_google_user,
               email: decodedToken.email,
-              profilePicture: decodedToken.picture || '' 
+              profilePicture: decodedToken.picture || ''
             });
           }
           showToast(t.auth.success_log);
@@ -1764,7 +1767,7 @@ const LoginPage = ({ setUser, showToast }) => {
                 <p className="text-on-surface-variant">{t.auth.login_desc}</p>
               </div>
 
-              <form 
+              <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (setUser) setUser({ firstName: t.auth.default_user, email: formData.email });
