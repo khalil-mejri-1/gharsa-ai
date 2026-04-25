@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { AnimatePresence } from 'framer-motion';
+import config from './config.js';
 
 const decodeJwt = (token) => {
   try {
@@ -479,7 +480,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
               <span className="text-white font-bold text-sm hidden sm:block">{user.firstName || user.name || t.auth.default_user}</span>
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 overflow-hidden flex items-center justify-center bg-primary/10">
                 {user.profilePicture ? (
-                  <img src={user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:5000${user.profilePicture}`} alt="User" className="w-full h-full object-cover" />
+                  <img src={user.profilePicture.startsWith('http') ? user.profilePicture : `${config.API_URL}${user.profilePicture}`} alt="User" className="w-full h-full object-cover" />
                 ) : (
                   <span className="material-symbols-outlined text-primary">person</span>
                 )}
@@ -588,7 +589,7 @@ const Navbar = ({ isSimple = false, user = null, setUser = null }) => {
                   <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 overflow-hidden flex items-center justify-center bg-primary/10">
                       {user.profilePicture ? (
-                        <img src={user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:5000${user.profilePicture}`} alt="User" className="w-full h-full object-cover" />
+                        <img src={user.profilePicture.startsWith('http') ? user.profilePicture : `${config.API_URL}${user.profilePicture}`} alt="User" className="w-full h-full object-cover" />
                       ) : (
                         <span className="material-symbols-outlined text-primary">person</span>
                       )}
@@ -1408,7 +1409,7 @@ const SignUpPage = ({ setUser, showToast }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${config.API_URL}/api/auth/register`, {
         method: 'POST',
         body: submitData,
       });
