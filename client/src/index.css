@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--c-primary);
+  --color-on-primary: var(--c-on-primary);
+  --color-primary-container: var(--c-primary-container);
+  --color-on-primary-container: var(--c-on-primary-container);
+
+  --color-background: var(--c-background);
+  --color-on-background: var(--c-on-background);
+
+  --color-surface: var(--c-surface);
+  --color-on-surface: var(--c-on-surface);
+  --color-on-surface-variant: var(--c-on-surface-variant);
+
+  --color-secondary: var(--c-secondary);
+  --color-secondary-container: var(--c-secondary-container);
+
+  --color-tertiary: var(--c-tertiary);
+
+  --color-yellow-custom: var(--c-yellow);
+  --color-white: var(--c-white);
+  --color-black: var(--c-black);
+
+  --font-space: "Space Grotesk", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-cairo: "Cairo", sans-serif;
+}
+
+:root {
+  --c-primary: #00e640;
+  --c-on-primary: #003909;
+  --c-primary-container: #00e640;
+  --c-on-primary-container: #006115;
+
+  --c-background: #050c09;
+  --c-on-background: #dfe4e1;
+
+  --c-surface: #0f1413;
+  --c-on-surface: #dfe4e1;
+  --c-on-surface-variant: #bacbb4;
+
+  --c-secondary: #c0c9c3;
+  --c-secondary-container: #404944;
+
+  --c-tertiary: #1a2e22;
+
+  --c-yellow: #facc15;
+  /* Tailwind yellow-400 equivalent for dark mode */
+  --c-white: #ffffff;
+  --c-black: #000000;
+}
+
+.light {
+  --c-primary: #00a82d;
+  --c-on-primary: #ffffff;
+  --c-primary-container: #b3f2c7;
+  --c-on-primary-container: #003909;
+
+  --c-background: #f4f8f5;
+  --c-on-background: #0a140e;
+
+  --c-surface: #e6f0e9;
+  --c-on-surface: #14291c;
+  --c-on-surface-variant: #425c4d;
+
+  --c-secondary: #4a5c51;
+  --c-secondary-container: #cdecd8;
+
+  --c-tertiary: #c4ebd0;
+
+  --c-yellow: #ff9500;
+  /* Darker amber/yellow for light mode visibility */
+  --c-white: #0a140e;
+  /* Inverts text-white to a dark elegant grey */
+  --c-black: #ffffff;
+  /* Inverts text-black to white */
+}
+
+@layer base {
+  body, html {
+    @apply bg-background text-on-background font-inter overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-space;
+  }
+}
+
+@utility glass-card {
+  background-color: color-mix(in srgb, var(--color-tertiary) 60%, transparent);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@utility neon-shadow {
+  box-shadow: 0 0 20px rgba(0, 230, 64, 0.2);
+}
+
+@utility neon-glow {
+  box-shadow: 0 0 15px rgba(0, 230, 64, 0.4);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-black px-8 py-4 rounded-full font-bold text-lg neon-glow hover:scale-105 transition-all duration-300 flex items-center gap-2;
+  }
+
+  .btn-glass {
+    @apply glass-card text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all duration-300;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-colors;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
