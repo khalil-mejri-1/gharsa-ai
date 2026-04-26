@@ -36,7 +36,8 @@ const translations = {
       title: 'مستقبل الزراعة',
       subtitle: 'بين يديك',
       desc: 'منصة شاملة مدعومة بالذكاء الاصطناعي لمراقبة محاصيلك، والتربة، والتواصل مع مجتمع من الخبراء لتحقيق أقصى إنتاجية.',
-      btn_signup: 'إنشاء حساب'
+      btn_signup: 'إنشاء حساب',
+      btn_ai_test: 'تجربة الذكاء الاصطناعي'
     },
     sensors: {
       title: 'متابعة دقيقة لكل تفصيلة',
@@ -200,7 +201,8 @@ const translations = {
       title: 'Future of Farming',
       subtitle: 'In Your Hands',
       desc: 'A comprehensive AI-powered platform to monitor your crops, soil, and connect with a community of experts for maximum productivity.',
-      btn_signup: 'Create Account'
+      btn_signup: 'Create Account',
+      btn_ai_test: 'AI Diagnosis'
     },
     sensors: {
       title: 'Precise Monitoring',
@@ -415,6 +417,7 @@ const App = () => {
           <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
           <Route path="/register" element={<SignUpPage setUser={setUser} showToast={showToast} />} />
           <Route path="/login" element={<LoginPage setUser={setUser} showToast={showToast} />} />
+          <Route path="/ai-diagnosis" element={<AIDiagnosisPage />} />
         </Routes>
       </BrowserRouter>
     </LanguageContext.Provider>
@@ -675,11 +678,18 @@ const LandingPage = ({ user, setUser }) => {
               <p className={`text-lg md:text-xl text-on-surface-variant max-w-xl leading-relaxed ${lang === 'ar' ? 'ml-auto' : 'mr-auto'}`}>
                 {t.hero.desc}
               </p>
-              <div className="flex gap-4 pt-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+              <div className="flex flex-wrap gap-4 pt-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <button className="bg-primary text-black px-8 py-3 rounded-full font-bold active:scale-95 transition-all neon-glow flex items-center gap-2">
                   <span>{t.nav.download}</span>
                   <span className="material-symbols-outlined">download</span>
                 </button>
+                <Link
+                  to="/ai-diagnosis"
+                  className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-8 py-3 rounded-full font-bold active:scale-95 transition-all flex items-center gap-2"
+                >
+                  <span>{t.hero.btn_ai_test}</span>
+                  <span className="material-symbols-outlined text-primary">psychology</span>
+                </Link>
                 {!user && (
                   <Link
                     to="/register"
@@ -1831,6 +1841,192 @@ const LoginPage = ({ setUser, showToast }) => {
           </div>
         </motion.div>
       </div>
+    </div>
+  );
+};
+
+const AIDiagnosisPage = () => {
+  const { t, lang } = useTranslation();
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [result, setResult] = React.useState(null);
+  const [previewImage, setPreviewImage] = React.useState(null);
+  const fileInputRef = React.useRef(null);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPreviewImage(URL.createObjectURL(file));
+    setResult(null);
+    await uploadImage(file);
+  };
+
+  const uploadImage = async (file) => {
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch(config.PREDICT_API_URL, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.disease) {
+        setResult(data);
+        console.log("المرض المكتشف:", data.disease);
+        console.log("نسبة التأكد:", data.confidence);
+      } else {
+        console.log("خطأ:", data.error);
+        alert(lang === 'ar' ? `خطأ: ${data.error}` : `Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("حدث خطأ أثناء الاتصال بالسيرفر:", error);
+      alert(lang === 'ar' ? "تأكد من أن السيرفر يعمل وأنك متصل بنفس الشبكة!" : "Make sure the server is running and you are on the same network!");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald-900/10 blur-[150px] rounded-full" />
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 p-6 flex justify-between items-center">
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 text-white/60 hover:text-primary transition-colors group"
+        >
+          <span className={`material-symbols-outlined group-hover:${lang === 'ar' ? 'translate-x-1' : '-translate-x-1'} transition-transform`}>
+            {lang === 'ar' ? 'arrow_forward' : 'arrow_back'}
+          </span>
+          <span className="font-bold">{t.auth.return}</span>
+        </button>
+      </nav>
+
+      {/* Main Scanner Container */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-[450px] space-y-12 relative z-10"
+      >
+        {!result ? (
+          <>
+            <div className="relative flex justify-center items-center">
+              {/* Scanning Rings (Circle) */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="w-72 h-72 sm:w-80 sm:h-80 border-2 border-dashed border-primary/40 rounded-full flex items-center justify-center"
+              />
+
+              {/* Viewfinder (Square) or Preview */}
+              <div className="absolute w-44 h-44 sm:w-48 sm:h-48 border-2 border-primary/20 rounded-[2.5rem] flex items-center justify-center overflow-hidden">
+                {previewImage ? (
+                  <img src={previewImage} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <>
+                    {/* Corners */}
+                    <div className="absolute -top-1 -left-1 w-10 h-10 border-t-4 border-l-4 border-primary rounded-tl-2xl" />
+                    <div className="absolute -top-1 -right-1 w-10 h-10 border-t-4 border-r-4 border-primary rounded-tr-2xl" />
+                    <div className="absolute -bottom-1 -left-1 w-10 h-10 border-b-4 border-l-4 border-primary rounded-bl-2xl" />
+                    <div className="absolute -bottom-1 -right-1 w-10 h-10 border-b-4 border-r-4 border-primary rounded-br-2xl" />
+
+                    <motion.span
+                      animate={{ opacity: [0.3, 1, 0.3], scale: [0.95, 1.05, 0.95] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="material-symbols-outlined text-primary text-6xl"
+                    >
+                      center_focus_weak
+                    </motion.span>
+                  </>
+                )}
+              </div>
+
+              {/* Loading Overlay */}
+              {isSubmitting && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm rounded-[3rem] z-20">
+                  <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
+                  <div className="text-white font-bold animate-pulse">{lang === 'ar' ? 'جاري التحليل...' : 'Analyzing...'}</div>
+                </div>
+              )}
+            </div>
+
+            <div className="text-center space-y-6">
+              <h1 className="text-4xl font-space font-bold text-white tracking-tight">
+                {t.mockups.ai_diag}
+              </h1>
+              <p className="text-on-surface-variant text-lg leading-relaxed max-w-sm mx-auto">
+                {t.mockups.ai_diag_desc}
+              </p>
+            </div>
+
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+
+            <button
+              onClick={() => fileInputRef.current.click()}
+              disabled={isSubmitting}
+              className={`w-full bg-primary text-black font-black py-5 rounded-[2rem] flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(0,230,64,0.3)] hover:scale-[1.02] active:scale-95 transition-all text-xl ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <span className="material-symbols-outlined text-2xl">photo_camera</span>
+              <span>{isSubmitting ? (lang === 'ar' ? 'جاري التحميل...' : 'Uploading...') : t.mockups.start_scan}</span>
+            </button>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center space-y-12"
+          >
+            {/* Circular Image with Dashed Border */}
+            <div className="relative">
+              <div className="w-64 h-64 rounded-full border-4 border-dashed border-primary/60 p-2">
+                <div className="w-full h-full rounded-full overflow-hidden border-2 border-primary/20">
+                  <img src={previewImage} alt="Scanned Plant" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full -z-10" />
+            </div>
+
+            {/* Result Card */}
+            <div className="w-full bg-[#0a1a10] border border-white/5 rounded-[2rem] p-8 text-center space-y-4 shadow-2xl">
+              <div className="text-white/40 text-xs font-bold tracking-[0.2em] uppercase">
+                {lang === 'ar' ? 'المرض المكتشف:' : 'Detected Disease:'}
+              </div>
+              <div className="text-white text-4xl font-bold tracking-tight">
+                {result.disease}
+              </div>
+              <div className="text-white/60 font-medium">
+                {lang === 'ar' ? 'نسبة التأكد:' : 'Confidence:'} {(result.confidence * 100).toFixed(2)}%
+              </div>
+            </div>
+
+            {/* Reset Button */}
+            <button
+              onClick={() => {
+                setResult(null);
+                setPreviewImage(null);
+              }}
+              className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-3 rounded-full font-bold transition-all flex items-center gap-2 group"
+            >
+              <span className="material-symbols-outlined group-hover:rotate-180 transition-transform">refresh</span>
+              {lang === 'ar' ? 'فحص صورة أخرى' : 'Scan Another Image'}
+            </button>
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 };
